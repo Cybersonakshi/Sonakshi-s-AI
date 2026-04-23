@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sonakshi's AI — Career Counsellor for Indian Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #f7f8fa;
+  --white:      #ffffff;
+  --border:     #e2e5eb;
+  --accent:     #2563eb;
+  --accent-lt:  #eff4ff;
+  --text:       #111827;
+  --muted:      #6b7280;
+  --muted2:     #9ca3af;
+  --green:      #16a34a;
+  --green-lt:   #f0fdf4;
+  --radius:     10px;
+  --radius-sm:  7px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+  letter-spacing: -0.01em;
+}
+.logo span { color: var(--accent); }
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.btn-nav-ghost {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  padding: 7px 16px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.83rem; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-nav-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-nav-primary {
+  background: var(--accent); color: #fff; border: none;
+  padding: 8px 18px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.83rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-nav-primary:hover { background: #1d4ed8; }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+section { padding: 60px 0; }
+
+/* ── HERO ── */
+#hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 64px 24px 56px;
+  text-align: center;
+}
+.hero-label {
+  display: inline-block;
+  background: var(--accent-lt); color: var(--accent);
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 50px;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700; line-height: 1.2; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 14px;
+}
+.hero-title .accent { color: var(--accent); }
+.hero-sub {
+  color: var(--muted); font-size: 1rem; max-width: 520px;
+  margin: 0 auto 32px; line-height: 1.65;
+}
+.hero-btn {
+  display: inline-block;
+  background: var(--accent); color: #fff; border: none;
+  padding: 13px 32px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.hero-btn:hover { background: #1d4ed8; }
+.hero-meta {
+  display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+  margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);
+}
+.hero-meta-item { text-align: center; }
+.hero-meta-num { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+.hero-meta-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+/* ── SECTION HEADER ── */
+.section-header { margin-bottom: 32px; }
+.section-step {
+  display: inline-block;
+  background: var(--accent-lt); color: var(--accent);
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 50px;
+  margin-bottom: 10px;
+}
+.section-title { font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.section-sub { font-size: 0.9rem; color: var(--muted); }
+
+/* ── CARD BASE ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+/* ── FORM ── */
+#form-section { display: none; background: var(--bg); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+.form-group label .req { color: var(--accent); }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text); padding: 10px 12px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.9rem;
+  transition: border-color 0.15s; outline: none; resize: none;
+  -webkit-appearance: none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--muted2); }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+  background: var(--white);
+}
+.field-hint { font-size: 0.75rem; color: var(--muted2); }
+
+/* Tags */
+.tags-display {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 8px 10px; border-radius: var(--radius-sm);
+  min-height: 44px; cursor: text;
+  transition: border-color 0.15s;
+}
+.tags-display.focused { border-color: var(--accent); background: var(--white); }
+.tag-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--accent-lt); border: 1px solid #bfdbfe;
+  color: var(--accent); font-size: 0.78rem; padding: 2px 9px; border-radius: 50px;
+  font-weight: 500;
+}
+.tag-chip button {
+  background: none; border: none; color: var(--accent);
+  cursor: pointer; font-size: 0.95rem; padding: 0 1px; line-height: 1;
+  opacity: 0.65;
+}
+.tag-chip button:hover { opacity: 1; }
+.tags-display input {
+  background: none; border: none; outline: none; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; min-width: 120px; flex: 1; padding: 1px 3px;
+}
+
+.form-actions { display: flex; align-items: center; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent); color: #fff; border: none;
+  padding: 11px 28px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: #1d4ed8; }
+.btn-secondary {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  padding: 11px 20px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── QUIZ ── */
+#quiz-section { display: none; background: var(--bg); }
+.quiz-card { max-width: 680px; margin: 0 auto; }
+.quiz-top {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.quiz-count { font-size: 0.8rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+.quiz-count strong { color: var(--text); }
+.progress-bar-wrap { flex: 1; }
+.progress-bar-track {
+  height: 5px; background: var(--border); border-radius: 50px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--accent); border-radius: 50px;
+  transition: width 0.4s ease;
+}
+.progress-pct { font-size: 0.7rem; color: var(--muted2); text-align: right; margin-top: 4px; }
+
+.question-text {
+  font-size: 1.05rem; font-weight: 600; line-height: 1.5;
+  margin-bottom: 18px; color: var(--text);
+}
+.options-list { display: flex; flex-direction: column; gap: 8px; }
+.option-btn {
+  background: var(--bg); border: 1.5px solid var(--border);
+  color: var(--text); padding: 12px 16px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; text-align: left;
+  cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-lt); }
+.option-btn.selected { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); }
+.option-letter {
+  width: 26px; height: 26px; flex-shrink: 0;
+  border-radius: 6px; background: var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700;
+}
+.option-btn.selected .option-letter { background: var(--accent); color: #fff; }
+
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+.btn-ghost {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  padding: 9px 18px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-next {
+  background: var(--accent); border: none; color: #fff;
+  padding: 10px 24px; border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-next:hover:not(:disabled) { background: #1d4ed8; }
+.btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── RESULT ── */
+#result-section { display: none; background: var(--bg); }
+
+/* Loading */
+.loading-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 20px; padding: 60px 0; text-align: center;
+}
+.loading-spinner {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-title { font-size: 1rem; font-weight: 600; color: var(--text); }
+.loading-sub { font-size: 0.85rem; color: var(--muted); }
+.loading-steps { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.loading-step { font-size: 0.82rem; color: var(--muted2); display: flex; align-items: center; gap: 8px; }
+.loading-step.active { color: var(--text); }
+.loading-step.active::before { content: '→'; color: var(--accent); font-weight: 700; }
+.loading-step.done { color: var(--green); }
+.loading-step.done::before { content: '✓'; font-weight: 700; }
+.loading-step:not(.done):not(.active)::before { content: '·'; color: var(--muted2); }
+
+/* Profile line */
+.profile-row {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+}
+.profile-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--white); border: 1px solid var(--border);
+  font-size: 0.78rem; color: var(--muted); padding: 4px 12px; border-radius: 50px;
+}
+
+/* Career cards */
+.careers-list { display: flex; flex-direction: column; gap: 24px; }
+
+.career-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.career-card-top {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.career-rank-badge {
+  width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+}
+.rank-1 { background: #fef9c3; color: #854d0e; border: 1px solid #fde68a; }
+.rank-2 { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.rank-3 { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+
+.career-name { font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+.career-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.career-tag {
+  display: inline-block; font-size: 0.72rem; font-weight: 600;
+  padding: 2px 9px; border-radius: 50px;
+}
+.career-tag.match { background: var(--green-lt); color: var(--green); border: 1px solid #bbf7d0; }
+.career-tag.field { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+
+/* Card sections */
+.career-section { padding: 18px 24px; border-bottom: 1px solid var(--border); }
+.career-section:last-child { border-bottom: none; }
+.career-section-label {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--muted); margin-bottom: 10px;
+}
+.why-text { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
+.why-text strong { color: var(--accent); font-weight: 600; }
+
+/* Roadmap */
+.roadmap-list { display: flex; flex-direction: column; gap: 12px; }
+.roadmap-item { display: flex; gap: 12px; align-items: flex-start; }
+.roadmap-num {
+  width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; margin-top: 1px;
+}
+.roadmap-phase { font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+.roadmap-desc { font-size: 0.85rem; color: var(--text); margin-top: 2px; line-height: 1.55; }
+
+/* Exams & Colleges */
+.chips-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--bg); border: 1px solid var(--border);
+  font-size: 0.8rem; color: var(--text); padding: 5px 12px; border-radius: 50px;
+}
+
+/* Results actions */
+.results-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+
+/* ── FUTURE SCOPE ── */
+#future-scope { background: var(--white); border-top: 1px solid var(--border); }
+.scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.scope-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.scope-icon { font-size: 1.4rem; margin-bottom: 10px; }
+.scope-card-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 5px; }
+.scope-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+.scope-status {
+  display: inline-block; margin-top: 8px;
+  background: var(--accent-lt); color: var(--accent);
+  font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 50px;
+}
+
+/* ── NOTICE / TOAST ── */
+.notice {
+  padding: 11px 16px; border-radius: var(--radius-sm);
+  font-size: 0.83rem; margin-bottom: 20px;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.notice.warning { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+.notice.info    { background: var(--accent-lt); border: 1px solid #bfdbfe; color: #1e40af; }
+.notice.success { background: var(--green-lt); border: 1px solid #bbf7d0; color: #166534; }
+
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  padding: 12px 16px; border-radius: var(--radius-sm);
+  font-size: 0.83rem; min-width: 220px; max-width: 340px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--white); border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,.1);
+}
+.toast.error   { border-left: 3px solid #ef4444; color: #991b1b; }
+.toast.success { border-left: 3px solid var(--green); color: #166534; }
+.toast.info    { border-left: 3px solid var(--accent); color: #1e40af; }
+.toast-close { margin-left: auto; background: none; border: none; color: var(--muted2); cursor: pointer; font-size: 1rem; }
+.toast-close:hover { color: var(--text); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 24px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  nav { padding: 12px 16px; }
+  .btn-nav-ghost { display: none; }
+  .form-grid { grid-template-columns: 1fr; }
+  .card { padding: 20px 16px; }
+  .career-card-top { padding: 16px; }
+  .career-section { padding: 14px 16px; }
+  .scope-grid { grid-template-columns: 1fr; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn-primary,
+  .form-actions .btn-secondary { width: 100%; text-align: center; }
+  .hero-meta { gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Sonakshi's <span>AI</span></div>
+  <div class="nav-right">
+    <button class="btn-nav-ghost" onclick="viewLastResult()" id="nav-last-btn" style="display:none">View Last Result</button>
+    <button class="btn-nav-primary" onclick="scrollToForm()">Get Started</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-label">AI Career Counsellor for Indian Students</div>
+    <h1 class="hero-title">Find the right career based on<br><span class="accent">what you like and how you think.</span></h1>
+    <p class="hero-sub">Fill a short form, take a 10-question quiz, and get three personalised career suggestions with roadmaps and entrance exam info.</p>
+    <button class="hero-btn" onclick="scrollToForm()">Start Now →</button>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-num">3</div>
+        <div class="hero-meta-label">Career Suggestions</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-num">10</div>
+        <div class="hero-meta-label">Quiz Questions</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-num">&lt;2 min</div>
+        <div class="hero-meta-label">Time to Complete</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-num">Free</div>
+        <div class="hero-meta-label">No Sign-up Needed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM SECTION -->
+<section id="form-section">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="section-step">Step 1 of 3</div>
+      <h2 class="section-title">Tell us about yourself</h2>
+      <p class="section-sub">Just the basics — your name, class, subjects, and what you enjoy.</p>
+    </div>
+    <div class="card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Your Name <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="e.g. Priya Singh" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Current Class <span class="req">*</span></label>
+          <select id="f-class">
+            <option value="" disabled selected>Select your class</option>
+            <option>Class 9</option>
+            <option>Class 10</option>
+            <option>Class 11 (Science)</option>
+            <option>Class 11 (Commerce)</option>
+            <option>Class 11 (Arts/Humanities)</option>
+            <option>Class 12 (Science)</option>
+            <option>Class 12 (Commerce)</option>
+            <option>Class 12 (Arts/Humanities)</option>
+            <option>Undergraduate</option>
+            <option>Graduate</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Subjects / Strengths <span class="req">*</span></label>
+          <div class="tags-display" id="subjects-tags" onclick="document.getElementById('subjects-input').focus()">
+            <input type="text" id="subjects-input" placeholder="Type a subject and press Enter — e.g. Maths, Biology…" />
+          </div>
+          <div class="field-hint">Add the subjects you're good at or enjoy.</div>
+        </div>
+        <div class="form-group full">
+          <label>Interests &amp; Hobbies <span class="req">*</span></label>
+          <div class="tags-display" id="interests-tags" onclick="document.getElementById('interests-input').focus()">
+            <input type="text" id="interests-input" placeholder="Type an interest and press Enter — e.g. Coding, Music…" />
+          </div>
+          <div class="field-hint">Things you do for fun or find yourself drawn to.</div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" onclick="submitForm()">Continue to Quiz →</button>
+        <button class="btn-secondary" onclick="viewLastResult()" id="view-last-btn" style="display:none">View Last Result</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ SECTION -->
+<section id="quiz-section">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="section-step">Step 2 of 3</div>
+      <h2 class="section-title">Quick quiz</h2>
+      <p class="section-sub">10 questions to understand how you think and what you value in work.</p>
+    </div>
+    <div class="card quiz-card">
+      <div class="quiz-top">
+        <span class="quiz-count">Question <strong id="q-num">1</strong> of 10</span>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill" style="width:10%"></div>
+          </div>
+          <div class="progress-pct" id="q-pct">10%</div>
+        </div>
+      </div>
+      <div id="question-wrap"></div>
+      <div class="quiz-nav">
+        <button class="btn-ghost" id="btn-prev" onclick="prevQuestion()" style="visibility:hidden">← Back</button>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT SECTION -->
+<section id="result-section">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="section-step">Step 3 of 3</div>
+      <h2 class="section-title">Your results</h2>
+      <p class="section-sub">Three career paths picked based on your profile and quiz answers.</p>
+    </div>
+    <div id="result-body"></div>
+  </div>
+</section>
+
+<!-- FUTURE SCOPE -->
+<section id="future-scope">
+  <div class="wrap">
+    <div class="section-header">
+      <div class="section-step">Future Plans</div>
+      <h2 class="section-title">What this project could become</h2>
+      <p class="section-sub">This started as a college project. Here's where it could go from here.</p>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <div class="scope-icon">🔐</div>
+        <div class="scope-card-title">User Accounts</div>
+        <div class="scope-card-desc">Students could log in, save their career results, and track changes in their interests over time.</div>
+        <div class="scope-status">Planned</div>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">🗄️</div>
+        <div class="scope-card-title">Cloud Storage</div>
+        <div class="scope-card-desc">A proper backend database to store results and quiz answers so data isn't lost when you close the tab.</div>
+        <div class="scope-status">Planned</div>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">🏫</div>
+        <div class="scope-card-title">Live College Data</div>
+        <div class="scope-card-desc">Real-time cutoffs, fees, and placement stats from NIRF and college portals, updated each year.</div>
+        <div class="scope-status">Research Phase</div>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">📱</div>
+        <div class="scope-card-title">Mobile App</div>
+        <div class="scope-card-desc">A phone app with exam reminders, deadline alerts, and a full career tracker built in.</div>
+        <div class="scope-status">Coming Soon</div>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">🧑‍🏫</div>
+        <div class="scope-card-title">Mentor Connect</div>
+        <div class="scope-card-desc">One-on-one video calls with career counsellors and working professionals for advice beyond AI.</div>
+        <div class="scope-status">Concept</div>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">📊</div>
+        <div class="scope-card-title">School Dashboard</div>
+        <div class="scope-card-desc">A tool for teachers and school counsellors to see what careers students in their class are interested in.</div>
+        <div class="scope-status">Concept</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  College Project — Sonakshi's AI &nbsp;|&nbsp; Built using HTML, CSS, JavaScript &amp; AI
+</footer>
+
+<script>
+/* ─────────────────────────────────────
+   QUIZ QUESTIONS
+───────────────────────────────────── */
+const QUESTIONS = [
+  {
+    text: "How do you prefer to spend your free time?",
+    options: ["Reading, writing, or looking things up", "Building or making something with my hands", "Spending time with people, helping or listening", "Creating art, music, videos, or stories"]
+  },
+  {
+    text: "Which subject genuinely excites you at school?",
+    options: ["Maths, Physics, or Computer Science", "Biology, Chemistry, or Environmental Science", "Economics, History, or Political Science", "Art, Literature, Music, or Languages"]
+  },
+  {
+    text: "When you run into a difficult problem, what do you do first?",
+    options: ["Break it down and go through it step by step", "Try different things and see what works", "Talk it over with someone else", "Think about the bigger picture or look for a creative angle"]
+  },
+  {
+    text: "Where would you be happiest working?",
+    options: ["A tech company, lab, or somewhere you can work independently", "A workshop, factory, field, or construction site", "A school, hospital, NGO, or community organisation", "A design studio, media company, or creative team"]
+  },
+  {
+    text: "What kind of impact do you want your work to have?",
+    options: ["Push technology or science forward", "Build something real — a product, system, or structure", "Directly help people in their day-to-day lives", "Change how people feel or see the world"]
+  },
+  {
+    text: "How do you feel about taking risks?",
+    options: ["I'm comfortable with uncertainty — I figure it out as I go", "I'm okay with risk if I can test things as I go", "I prefer stability and steady progress", "Creative risk is fine, but financial instability worries me"]
+  },
+  {
+    text: "What comes most naturally to you?",
+    options: ["Logical thinking and structured problem-solving", "Practical, hands-on execution", "Understanding people and communicating well", "Coming up with original ideas and creative solutions"]
+  },
+  {
+    text: "What would keep you motivated in a job long-term?",
+    options: ["Intellectual challenge and learning new things constantly", "Watching real things get built or shipped", "Making a meaningful difference in someone's life", "Being recognised for your creativity or self-expression"]
+  },
+  {
+    text: "How do you feel about working with numbers and data?",
+    options: ["I love it — data tells stories that words can't", "I can use it when I need to", "I prefer working with people or ideas", "Only if it helps me communicate something better"]
+  },
+  {
+    text: "In a group project, what role do you naturally end up in?",
+    options: ["The planner — mapping out what needs to happen and when", "The doer — getting things finished and making sure it actually works", "The connector — keeping the team together and motivated", "The idea person — coming up with the creative angle"]
+  }
+];
+
+/* ─────────────────────────────────────
+   FALLBACK CAREER DATA
+───────────────────────────────────── */
+const CAREER_DB = {
+  A: [
+    {
+      name: "Software Engineer / AI Researcher",
+      field: "Technology",
+      match: "Strong Match",
+      why: "Your <strong>analytical mindset</strong> and comfort with structured problem-solving are exactly what engineering programs look for. You enjoy breaking things down logically and working independently — both of which are essential in software and AI roles.",
+      roadmap: [
+        { phase: "Now (0–6 months)", desc: "Start with Python basics and simple data structures. CS50 on edX is a great free starting point." },
+        { phase: "Short-term (6–18 months)", desc: "Build 2–3 small projects. Learn Git and put your work on GitHub. Try LeetCode Easy problems." },
+        { phase: "Mid-term (1–3 years)", desc: "Complete B.Tech in Computer Science or IT from IIT, NIT, or BITS Pilani." },
+        { phase: "Long-term (3+ years)", desc: "Specialise in AI/ML or backend systems. Work at a product company or start your own tech venture." }
+      ],
+      exams: ["JEE Mains", "JEE Advanced", "BITSAT", "VITEEE", "MHT-CET", "CUET", "KCET"],
+      colleges: ["IIT Bombay", "IIT Delhi", "NIT Trichy", "BITS Pilani", "IIIT Hyderabad", "VIT Vellore", "DTU Delhi"]
+    },
+    {
+      name: "Data Scientist / Analyst",
+      field: "Data & Analytics",
+      match: "Good Match",
+      why: "You have a natural tendency to look for patterns and reason through data. Data science sits at the overlap of maths, coding, and real-world problem-solving — a combination that suits your strengths well.",
+      roadmap: [
+        { phase: "Now", desc: "Learn basic statistics and Excel. Then start with Python (Pandas, NumPy, Matplotlib)." },
+        { phase: "Short-term", desc: "Try a Kaggle competition. Study probability and basic ML algorithms." },
+        { phase: "Mid-term", desc: "B.Sc. in Statistics or Maths from IIT/ISI, or B.Tech with a data science focus." },
+        { phase: "Long-term", desc: "MSc in Data Science or an MBA in Analytics. Target tech companies, banks, or consulting firms." }
+      ],
+      exams: ["JEE Mains", "CUET", "IISER Aptitude Test", "CMI Entrance", "ISI Entrance", "GATE"],
+      colleges: ["ISI Kolkata", "CMI Chennai", "IISc Bangalore", "DSE Delhi", "Ashoka University", "Shiv Nadar University"]
+    }
+  ],
+  B: [
+    {
+      name: "Mechanical or Civil Engineer",
+      field: "Core Engineering",
+      match: "Strong Match",
+      why: "You like working with your hands and seeing concrete results. Engineering gives you exactly that — you design, test, and build things that exist in the real world, from machines to bridges to buildings.",
+      roadmap: [
+        { phase: "Now", desc: "Strengthen Physics and Maths. Try basic CAD tools like AutoCAD or Fusion 360 (free for students)." },
+        { phase: "Short-term", desc: "Join a school robotics club or enter a science fair. Build something small." },
+        { phase: "Mid-term", desc: "B.Tech in Mechanical, Civil, or Aerospace Engineering from IIT or NIT." },
+        { phase: "Long-term", desc: "Specialise in sustainable design, manufacturing, or infrastructure. GATE opens doors to PSU jobs and M.Tech." }
+      ],
+      exams: ["JEE Mains", "JEE Advanced", "BITSAT", "VITEEE", "State CETs", "GATE", "UPSC ESE"],
+      colleges: ["IIT Kharagpur", "IIT Roorkee", "NIT Surathkal", "BITS Pilani", "VJTI Mumbai", "NIT Warangal"]
+    },
+    {
+      name: "Product Designer / UX Designer",
+      field: "Design & Technology",
+      match: "Good Match",
+      why: "You care about both how things work and how they look and feel. Product design is the mix of technical thinking and creative instinct — which is a hard combination to find and very much in demand.",
+      roadmap: [
+        { phase: "Now", desc: "Learn Figma and study basic design principles. Try redesigning the UI of an app you use daily." },
+        { phase: "Short-term", desc: "Build a Behance or Dribbble portfolio. Take Google's free UX Design Certificate on Coursera." },
+        { phase: "Mid-term", desc: "B.Des from NID, NIFT, or IIT IDC. Or B.Tech + UX specialisation." },
+        { phase: "Long-term", desc: "Senior designer or product manager role at a tech company or startup." }
+      ],
+      exams: ["NID DAT", "NIFT Entrance", "UCEED", "CEED", "JEE Paper 2", "Srishti Entrance"],
+      colleges: ["NID Ahmedabad", "IIT IDC Bombay", "NIFT Delhi", "Srishti Bangalore", "MIT Institute of Design", "Pearl Academy"]
+    }
+  ],
+  C: [
+    {
+      name: "Doctor / Public Health Specialist",
+      field: "Healthcare",
+      match: "Strong Match",
+      why: "You genuinely want to help people — not just in general, but in a direct, hands-on way. Medicine gives you that, along with the intellectual challenge of diagnosis and the reward of watching someone recover.",
+      roadmap: [
+        { phase: "Now", desc: "Focus on Biology, Chemistry, and Physics. Try volunteering at a local clinic or NSS health camp." },
+        { phase: "Short-term", desc: "Begin NEET prep. Join Allen, Aakash, or use NCERT thoroughly. Try biology olympiads." },
+        { phase: "Mid-term", desc: "MBBS from AIIMS, a government medical college, or a reputed private college." },
+        { phase: "Long-term", desc: "Specialise in MD/MS — options include psychiatry, oncology, surgery, or public health." }
+      ],
+      exams: ["NEET-UG", "AIIMS (via NEET)", "JIPMER (via NEET)", "CUET (BSc Nursing)", "NEET-PG"],
+      colleges: ["AIIMS Delhi", "AIIMS Jodhpur", "JIPMER Puducherry", "CMC Vellore", "AFMC Pune", "KGMU Lucknow"]
+    },
+    {
+      name: "Psychologist / Social Worker",
+      field: "Social Impact",
+      match: "Good Match",
+      why: "You understand people and want to make a difference in their lives. Psychology and social work give you the tools to do that in a structured, meaningful way — whether in a clinic, school, or the field.",
+      roadmap: [
+        { phase: "Now", desc: "Read some core psychology books. Volunteer at an NGO or a mental health helpline like iCall." },
+        { phase: "Short-term", desc: "Prepare for CUET. Explore social entrepreneurship case studies and youth fellowships." },
+        { phase: "Mid-term", desc: "BA/BSc in Psychology or Social Work from DU, Christ University, or TISS." },
+        { phase: "Long-term", desc: "MA in Clinical Psychology with RCI licence, or start a social enterprise through TISS." }
+      ],
+      exams: ["CUET", "TISS NET", "Christ University Entrance", "Symbiosis SET", "Jamia Entrance"],
+      colleges: ["TISS Mumbai", "Delhi University", "Christ University Bangalore", "Jamia Millia", "Amity University", "Ashoka University"]
+    }
+  ],
+  D: [
+    {
+      name: "Film Director / Digital Creator",
+      field: "Media & Entertainment",
+      match: "Strong Match",
+      why: "You think in stories. You're drawn to the idea of changing how people feel or see things — and that's exactly what filmmakers, journalists, and digital creators do. This is a career built on originality.",
+      roadmap: [
+        { phase: "Now", desc: "Start a YouTube channel or make short films on your phone. Learn Adobe Premiere or DaVinci Resolve (free version)." },
+        { phase: "Short-term", desc: "Enter student film competitions. Aim to build a portfolio of 5+ original pieces." },
+        { phase: "Mid-term", desc: "Apply to FTII Pune, Whistling Woods, Symbiosis Film, or a Mass Communication programme." },
+        { phase: "Long-term", desc: "Work in OTT production, journalism, or build your own content channel or production company." }
+      ],
+      exams: ["FTII Entrance", "Whistling Woods Entrance", "CUET (Mass Comm)", "Xavier's Mumbai Entrance", "Symbiosis SET"],
+      colleges: ["FTII Pune", "Whistling Woods Mumbai", "Xavier's Mumbai", "Jamia Mass Comm", "Symbiosis Pune", "AJK Mass Comm Delhi"]
+    },
+    {
+      name: "Architect / Game Designer",
+      field: "Creative Design",
+      match: "Good Match",
+      why: "You have the kind of spatial imagination that makes you think in three dimensions — whether it's a building or a virtual world. Architecture and game design both demand creativity with technical rigour.",
+      roadmap: [
+        { phase: "Now", desc: "Sketch every day. Explore free tools like SketchUp, Blender, or Unity." },
+        { phase: "Short-term", desc: "Build a design portfolio. Prepare for NATA or JEE Paper 2." },
+        { phase: "Mid-term", desc: "B.Arch from SPA Delhi, CEPT Ahmedabad, or an NIT. Or Game Design at MIT-WPU." },
+        { phase: "Long-term", desc: "Join an architecture firm or develop indie games and grow your own studio." }
+      ],
+      exams: ["NATA", "JEE Paper 2 (B.Arch)", "CUET", "NID DAT", "NIFT Entrance"],
+      colleges: ["SPA Delhi", "CEPT Ahmedabad", "IIT Kharagpur (Arch)", "NIT Calicut", "BITS Pilani (Arch)", "MIT-WPU Pune"]
+    }
+  ]
+};
+
+/* ─────────────────────────────────────
+   APP STATE
+───────────────────────────────────── */
+let userData = {};
+let quizAnswers = [];
+let currentQ = 0;
+let selectedOption = null;
+
+/* ─────────────────────────────────────
+   TOAST
+───────────────────────────────────── */
+function showToast(msg, type = 'error') {
+  const icons = { error: '✕', success: '✓', info: 'i' };
+  const container = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${icons[type]}</span><span>${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">×</button>`;
+  container.appendChild(t);
+  setTimeout(() => { if (t.parentElement) t.remove(); }, 4000);
+}
+
+/* ─────────────────────────────────────
+   LOCAL STORAGE
+───────────────────────────────────── */
+function saveToLocalStorage(careers) {
+  try {
+    localStorage.setItem('sonakshi_ai_result', JSON.stringify({
+      user: userData, careers, savedAt: new Date().toLocaleString('en-IN')
+    }));
+  } catch(e) {}
+}
+
+function loadFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem('sonakshi_ai_result');
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function viewLastResult() {
+  const saved = loadFromLocalStorage();
+  if (!saved) { showToast('No saved result found. Complete the quiz first.', 'info'); return; }
+  userData = saved.user;
+  const rs = document.getElementById('result-section');
+  rs.style.display = 'block';
+  rs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  renderResults(saved.careers, true, saved.savedAt);
+}
+
+/* ─────────────────────────────────────
+   TAGS INPUT
+───────────────────────────────────── */
+function initTagInput(inputId, displayId, stateKey) {
+  const input = document.getElementById(inputId);
+  const display = document.getElementById(displayId);
+  input.addEventListener('focus', () => display.classList.add('focused'));
+  input.addEventListener('blur', () => display.classList.remove('focused'));
+  input.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ',') && input.value.trim()) {
+      e.preventDefault();
+      const val = input.value.trim().replace(/,$/, '');
+      if (val) addTag(val, displayId, stateKey, input);
+    }
+    if (e.key === 'Backspace' && !input.value) removeLastTag(displayId, stateKey);
+  });
+}
+
+function addTag(text, displayId, stateKey, input) {
+  if (!userData[stateKey]) userData[stateKey] = [];
+  const clean = text.trim();
+  if (!clean || userData[stateKey].includes(clean)) return;
+  userData[stateKey].push(clean);
+  renderTags(displayId, stateKey);
+  if (input) input.value = '';
+}
+
+function removeTag(text, displayId, stateKey) {
+  if (userData[stateKey]) userData[stateKey] = userData[stateKey].filter(t => t !== text);
+  renderTags(displayId, stateKey);
+}
+
+function removeLastTag(displayId, stateKey) {
+  if (userData[stateKey] && userData[stateKey].length) {
+    userData[stateKey].pop();
+    renderTags(displayId, stateKey);
+  }
+}
+
+function renderTags(displayId, stateKey) {
+  const display = document.getElementById(displayId);
+  const inputId = displayId === 'subjects-tags' ? 'subjects-input' : 'interests-input';
+  const inp = document.getElementById(inputId);
+  display.querySelectorAll('.tag-chip').forEach(c => c.remove());
+  (userData[stateKey] || []).forEach(text => {
+    const chip = document.createElement('div');
+    chip.className = 'tag-chip';
+    const safe = text.replace(/'/g, "\\'");
+    chip.innerHTML = `${text}<button onclick="removeTag('${safe}','${displayId}','${stateKey}')" type="button">×</button>`;
+    display.insertBefore(chip, inp);
+  });
+}
+
+/* ─────────────────────────────────────
+   NAVIGATION
+───────────────────────────────────── */
+function scrollToForm() {
+  const fs = document.getElementById('form-section');
+  fs.style.display = 'block';
+  setTimeout(() => fs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  if (loadFromLocalStorage()) {
+    document.getElementById('view-last-btn').style.display = 'inline-block';
+    document.getElementById('nav-last-btn').style.display = 'inline-block';
+  }
+}
+
+/* ─────────────────────────────────────
+   FORM SUBMIT
+───────────────────────────────────── */
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const cls  = document.getElementById('f-class').value;
+  const subjects  = userData.subjects  || [];
+  const interests = userData.interests || [];
+
+  if (!name)             { showToast('Please enter your name.', 'error'); document.getElementById('f-name').focus(); return; }
+  if (name.length < 2)   { showToast('Name must be at least 2 characters.', 'error'); return; }
+  if (!cls)              { showToast('Please select your class.', 'error'); return; }
+  if (!subjects.length)  { showToast('Please add at least one subject.', 'error'); return; }
+  if (!interests.length) { showToast('Please add at least one interest.', 'error'); return; }
+
+  userData = { ...userData, name, class: cls };
+
+  const qs = document.getElementById('quiz-section');
+  qs.style.display = 'block';
+  setTimeout(() => qs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  quizAnswers = []; currentQ = 0; selectedOption = null;
+  renderQuestion(0);
+  showToast('Good. Now answer the quiz questions.', 'success');
+}
+
+/* ─────────────────────────────────────
+   QUIZ
+───────────────────────────────────── */
+function renderQuestion(idx) {
+  const q = QUESTIONS[idx];
+  const letters = ['A', 'B', 'C', 'D'];
+  document.getElementById('question-wrap').innerHTML = `
+    <div class="question-text">${q.text}</div>
+    <div class="options-list">
+      ${q.options.map((opt, i) => `
+        <button class="option-btn${quizAnswers[idx] === i ? ' selected' : ''}" onclick="selectOption(${i})">
+          <span class="option-letter">${letters[i]}</span>
+          ${opt}
+        </button>
+      `).join('')}
+    </div>
+  `;
+  const pct = Math.round(((idx + 1) / QUESTIONS.length) * 100);
+  document.getElementById('q-num').textContent = idx + 1;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('q-pct').textContent = pct + '%';
+  document.getElementById('btn-prev').style.visibility = idx > 0 ? 'visible' : 'hidden';
+  document.getElementById('btn-next').disabled = (quizAnswers[idx] === undefined);
+  document.getElementById('btn-next').textContent = idx === QUESTIONS.length - 1 ? 'See My Results →' : 'Next →';
+  selectedOption = quizAnswers[idx] !== undefined ? quizAnswers[idx] : null;
+}
+
+function selectOption(i) {
+  selectedOption = i;
+  quizAnswers[currentQ] = i;
+  document.querySelectorAll('.option-btn').forEach((btn, idx) => {
+    btn.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  if (selectedOption === null && quizAnswers[currentQ] === undefined) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion(currentQ);
+  } else {
+    showResults();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) { currentQ--; renderQuestion(currentQ); }
+}
+
+/* ─────────────────────────────────────
+   AI API CALL
+───────────────────────────────────── */
+async function fetchAIResponse(data) {
+  const prompt = `You are a career counselor for Indian students in Class 9 to undergraduate level.
+
+Student profile:
+- Name: ${data.name}
+- Class: ${data.class}
+- Subjects / Strengths: ${Array.isArray(data.subjects) ? data.subjects.join(', ') : data.subjects}
+- Interests / Hobbies: ${Array.isArray(data.interests) ? data.interests.join(', ') : data.interests}
+- Quiz answers (0=Analytical/Tech, 1=Hands-on/Build, 2=People/Social, 3=Creative): ${JSON.stringify(data.quizAnswers)}
+
+Suggest exactly 3 career paths for this student. Respond ONLY with a valid JSON object. No markdown, no explanation:
+
+{
+  "careers": [
+    {
+      "name": "Career Title",
+      "field": "Domain",
+      "match": "XX% Match",
+      "why": "2-3 sentences explaining why this fits this specific student. Use <strong>bold</strong> for key phrases.",
+      "roadmap": [
+        { "phase": "Now (0–6 months)", "desc": "Specific first steps." },
+        { "phase": "Short-term (6–18 months)", "desc": "Next steps." },
+        { "phase": "Mid-term (1–3 years)", "desc": "Education path with real college names." },
+        { "phase": "Long-term (3+ years)", "desc": "Career goal." }
+      ],
+      "exams": ["Real Indian exam 1", "Real Indian exam 2"],
+      "colleges": ["Real Indian college 1", "Real Indian college 2", "Real Indian college 3"]
+    }
+  ]
+}
+
+Rules: Use only real Indian exams and colleges. Rank careers from best to third best fit. Write the 'why' in plain, direct English — like explaining to a friend.`;
+
+  const response = await fetch("http://localhost:3000/api/ai", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...data, prompt })
+  });
+
+  if (!response.ok) throw new Error("Server error: " + response.status);
+  const json = await response.json();
+
+  if (json.careers && Array.isArray(json.careers)) return json.careers;
+  if (json.result) {
+    const cleaned = json.result.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(cleaned);
+    return parsed.careers || parsed;
+  }
+  throw new Error("Unexpected response format");
+}
+
+function getLocalFallback() {
+  const tally = [0, 0, 0, 0];
+  quizAnswers.forEach(a => { if (a !== undefined && a >= 0 && a <= 3) tally[a]++; });
+  const sorted = [0,1,2,3].sort((a,b) => tally[b] - tally[a]);
+  const catKey  = ['A','B','C','D'][sorted[0]];
+  const cat2Key = ['A','B','C','D'][sorted[1]];
+  const primary   = CAREER_DB[catKey]  || [];
+  const secondary = CAREER_DB[cat2Key] || [];
+  return [...primary, ...secondary].slice(0, 3);
+}
+
+/* ─────────────────────────────────────
+   LOADING UI
+───────────────────────────────────── */
+function showLoadingUI() {
+  document.getElementById('result-body').innerHTML = `
+    <div class="card loading-wrap">
+      <div class="loading-spinner"></div>
+      <div class="loading-title">Analysing your profile…</div>
+      <div class="loading-sub">This usually takes a few seconds.</div>
+      <div class="loading-steps">
+        <div class="loading-step active" id="ls-1">Reading your subjects and interests</div>
+        <div class="loading-step" id="ls-2">Processing your quiz answers</div>
+        <div class="loading-step" id="ls-3">Matching to Indian career options</div>
+        <div class="loading-step" id="ls-4">Writing your personalised roadmaps</div>
+      </div>
+    </div>
+  `;
+  const steps = ['ls-1','ls-2','ls-3','ls-4'];
+  let i = 0;
+  return setInterval(() => {
+    if (i > 0) {
+      const prev = document.getElementById(steps[i-1]);
+      if (prev) { prev.classList.remove('active'); prev.classList.add('done'); }
+    }
+    const curr = document.getElementById(steps[i]);
+    if (curr) curr.classList.add('active');
+    i++;
+    if (i >= steps.length) i = steps.length - 1;
+  }, 900);
+}
+
+/* ─────────────────────────────────────
+   SHOW RESULTS
+───────────────────────────────────── */
+async function showResults() {
+  const rs = document.getElementById('result-section');
+  rs.style.display = 'block';
+  setTimeout(() => rs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+
+  const loadingInterval = showLoadingUI();
+  let careers;
+  let fromAI = true;
+  try {
+    careers = await fetchAIResponse({ ...userData, quizAnswers });
+  } catch(e) {
+    console.warn('AI fetch failed, using local fallback:', e.message);
+    careers = getLocalFallback();
+    fromAI = false;
+  }
+  clearInterval(loadingInterval);
+  saveToLocalStorage(careers);
+  renderResults(careers, false, null, fromAI);
+}
+
+/* ─────────────────────────────────────
+   RENDER RESULTS
+───────────────────────────────────── */
+function renderResults(careers, isRestored = false, savedAt = null, fromAI = true) {
+  const rb = document.getElementById('result-body');
+  const firstName = (userData.name || 'there').split(' ')[0];
+  const subjectsList  = (userData.subjects  || []).slice(0, 3).join(', ');
+  const interestsList = (userData.interests || []).slice(0, 3).join(', ');
+
+  const restoredBanner = isRestored ? `
+    <div class="notice info">
+      <span>📋</span>
+      <span>Showing your saved result from <strong>${savedAt}</strong>.</span>
+    </div>` : '';
+
+  const aiBanner = !fromAI && !isRestored ? `
+    <div class="notice warning">
+      <span>⚡</span>
+      <span>The AI server is unavailable right now. These results are based on your quiz answers using our offline database.</span>
+    </div>` : '';
+
+  rb.innerHTML = `
+    ${restoredBanner}
+    ${aiBanner}
+    <p style="font-size:1rem;font-weight:600;margin-bottom:14px;color:var(--text)">
+      Hi ${firstName}, here are your top 3 career matches:
+    </p>
+    <div class="profile-row">
+      ${userData.class    ? `<div class="profile-tag">🎓 ${userData.class}</div>` : ''}
+      ${subjectsList      ? `<div class="profile-tag">📚 ${subjectsList}</div>` : ''}
+      ${interestsList     ? `<div class="profile-tag">✦ ${interestsList}</div>` : ''}
+    </div>
+    <div class="careers-list">
+      ${careers.map((c, i) => buildCareerCard(c, i)).join('')}
+    </div>
+    <div class="results-actions">
+      <button class="btn-secondary" onclick="restartApp()">← Retake Quiz</button>
+      <button class="btn-primary" onclick="window.print()">Print / Save Results</button>
+    </div>
+  `;
+}
+
+function buildCareerCard(c, i) {
+  const rankLabels = ['1st', '2nd', '3rd'];
+
+  const roadmapHTML = (c.roadmap || []).map((step, si) => `
+    <div class="roadmap-item">
+      <div class="roadmap-num">${si + 1}</div>
+      <div>
+        <div class="roadmap-phase">${step.phase}</div>
+        <div class="roadmap-desc">${step.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const examsHTML = (c.exams || []).map(e => `
+    <div class="chip">📝 ${e}</div>
+  `).join('');
+
+  const collegesHTML = (c.colleges || []).map(col => `
+    <div class="chip">🏛️ ${col}</div>
+  `).join('');
+
+  return `
+    <div class="career-card">
+      <div class="career-card-top">
+        <div class="career-rank-badge rank-${i+1}">${rankLabels[i]}</div>
+        <div>
+          <div class="career-name">${c.name}</div>
+          <div class="career-tags">
+            <span class="career-tag match">${c.match || 'Good Match'}</span>
+            ${c.field ? `<span class="career-tag field">${c.field}</span>` : ''}
+          </div>
+        </div>
+      </div>
+
+      <div class="career-section">
+        <div class="career-section-label">Why it fits you</div>
+        <p class="why-text">${c.why || 'This career aligns with your profile and quiz results.'}</p>
+      </div>
+
+      <div class="career-section">
+        <div class="career-section-label">Roadmap</div>
+        <div class="roadmap-list">${roadmapHTML}</div>
+      </div>
+
+      ${(c.exams || []).length ? `
+      <div class="career-section">
+        <div class="career-section-label">Entrance Exams</div>
+        <div class="chips-wrap">${examsHTML}</div>
+      </div>` : ''}
+
+      ${(c.colleges || []).length ? `
+      <div class="career-section">
+        <div class="career-section-label">Top Colleges</div>
+        <div class="chips-wrap">${collegesHTML}</div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+/* ─────────────────────────────────────
+   RESTART
+───────────────────────────────────── */
+function restartApp() {
+  userData = {}; quizAnswers = []; currentQ = 0; selectedOption = null;
+  document.getElementById('quiz-section').style.display = 'none';
+  document.getElementById('result-section').style.display = 'none';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-class').selectedIndex = 0;
+  ['subjects-tags','interests-tags'].forEach(id => {
+    document.getElementById(id).querySelectorAll('.tag-chip').forEach(c => c.remove());
+  });
+  document.getElementById('subjects-input').value = '';
+  document.getElementById('interests-input').value = '';
+  scrollToForm();
+  showToast('Quiz reset. Fill in your details again.', 'info');
+}
+
+/* ─────────────────────────────────────
+   INIT
+───────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  initTagInput('subjects-input', 'subjects-tags', 'subjects');
+  initTagInput('interests-input', 'interests-tags', 'interests');
+  if (loadFromLocalStorage()) {
+    document.getElementById('nav-last-btn').style.display = 'inline-block';
+  }
+});
+</script>
+</body>
+</html>
