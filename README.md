@@ -138,4 +138,4 @@ The idea is simple:
 
 ## Made for
 
-College project — Sonakshi’s AI
+College project — ISIS AI
