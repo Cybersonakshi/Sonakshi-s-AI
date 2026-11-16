@@ -1,4 +1,4 @@
-# Sonakshi’s AI 
+# ISIS AI 
 
 *A simple tool to help students figure out what career might suit them*
 
